@@ -1,0 +1,20 @@
+{
+  "name": "presentation-igarss-2026-earth-embeddings",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Earth Embeddings as Products — IGARSS 2026 talk (Slidev)",
+  "license": "CC-BY-4.0",
+  "scripts": {
+    "dev": "slidev slides.md",
+    "build": "slidev build slides.md --out dist",
+    "export": "slidev export slides.md --format pdf --output earth-embeddings-igarss2026.pdf",
+    "lint": "biome check .",
+    "format": "biome check --write ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.6",
+    "@slidev/cli": "^52.15.2",
+    "@slidev/theme-default": "^0.25.0",
+    "playwright-chromium": "^1.60.0"
+  }
+}

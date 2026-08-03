@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.slidev/
+*.log
+.DS_Store
+media/
+sources/
+*.zip

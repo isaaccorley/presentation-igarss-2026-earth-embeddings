@@ -1,7 +1,6 @@
 name: Deploy slides to GitHub Pages
 
-# Replace presentation-igarss-2026-earth-embeddings below with the repository name (for a project Pages site
-# served at <user>.github.io/presentation-igarss-2026-earth-embeddings/). For a user/org root site, set base to "/".
+# Project Pages site served at isaac.earth/presentation-igarss-2026-earth-embeddings/.
 
 on:
   push:
@@ -22,15 +21,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
+      - uses: oven-sh/setup-bun@v2
       - name: Install deps (skip Chromium — build doesn't need it)
-        run: npm install
+        run: bun install --frozen-lockfile
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+      - name: Lint
+        run: bun run lint
       - name: Build Slidev (subpath base for project Pages)
-        run: npm run build -- --base /presentation-igarss-2026-earth-embeddings/
+        run: bun run build -- --base /presentation-igarss-2026-earth-embeddings/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

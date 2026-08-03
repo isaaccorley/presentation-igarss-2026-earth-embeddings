@@ -36,8 +36,11 @@ Hossein Azizpour<span class="muted"> — KTH Royal Institute of Technology</span
 *equal contribution &nbsp;·&nbsp; now expanded as the book chapter <em>Earth Embeddings</em> (arXiv, August 2026)
 </div>
 
+<PdfLink />
+
 ---
 layout: default
+clicks: 1
 ---
 
 <span class="kicker">Motivation</span>
@@ -157,6 +160,7 @@ Every team solves distribution independently — the integration tax is paid onc
 
 ---
 layout: default
+clicks: 1
 ---
 
 <span class="kicker">Ecosystem · cost</span>
@@ -188,6 +192,7 @@ layout: default
 
 ---
 layout: default
+clicks: 1
 ---
 
 <span class="kicker">Standardized access</span>

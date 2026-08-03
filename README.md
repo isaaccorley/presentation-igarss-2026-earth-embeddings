@@ -21,7 +21,8 @@ make clips         # re-render the manim loops (needs manim + ffmpeg)
 ## Deliverables
 
 ```bash
-bun run export     # earth-embeddings-igarss2026.pdf (static, poster frames)
+bun run export     # public/earth-embeddings-igarss2026.pdf (static, poster frames;
+                   # served by the site via the "View as PDF" button)
 make pdf-animated  # earth-embeddings-igarss2026-animated.pdf (clips embedded)
 ```
 

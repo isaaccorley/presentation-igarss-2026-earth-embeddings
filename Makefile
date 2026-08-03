@@ -11,7 +11,8 @@ dev:
 build:
 	bun run build
 
-# Static PDF (posters shown where the web build plays loops)
+# Static PDF (posters shown where the web build plays loops).
+# Lands in public/ so the deployed site serves it ("View as PDF").
 export:
 	bun run export
 
@@ -31,7 +32,7 @@ posters:
 
 # PDF with playable embedded loops (RichMedia; plays in Adobe Acrobat)
 pdf-animated: export
-	uv run scripts/embed_videos.py earth-embeddings-igarss2026.pdf earth-embeddings-igarss2026-animated.pdf
+	uv run scripts/embed_videos.py public/earth-embeddings-igarss2026.pdf earth-embeddings-igarss2026-animated.pdf
 
 lint:
 	bun run lint

@@ -78,9 +78,7 @@ pre code { background: none; padding: 0; font-size: 0.82rem !important; line-hei
   font-family: "Source Serif 4", Georgia, serif;
   border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink);
 }
-/* numeric columns in mono so figures stay aligned under the serif */
-thead th:not(:first-child), tbody td:not(:first-child) { font-family: "JetBrains Mono", monospace; font-size: 0.67rem; }
-thead th { font-weight: 600; padding: 0.16rem 0.55rem; text-align: right; border-bottom: 1px solid var(--ink); color: var(--ink); }
+thead th { font-weight: 700; padding: 0.16rem 0.55rem; text-align: right; border-bottom: 1px solid var(--ink); color: var(--ink); }
 thead th:first-child, tbody td:first-child { text-align: left; padding-left: 0; padding-right: 1.3rem; }
 tbody td { padding: 0.1rem 0.55rem; text-align: right; border: none; font-variant-numeric: tabular-nums; line-height: 1.25; }
 tbody tr:nth-child(even) td { background: none; }
@@ -91,7 +89,6 @@ tbody tr:nth-child(even) td { background: none; }
 
 /* per-slide denser variant for a tall (7-row+) table: `class: tight` */
 .tight table { font-size: 0.66rem; }
-.tight thead th:not(:first-child), .tight tbody td:not(:first-child) { font-size: 0.62rem; }
 .tight tbody td { padding: 0.06rem 0.5rem; line-height: 1.15; }
 .tight thead th { padding: 0.12rem 0.5rem; }
 
@@ -118,6 +115,17 @@ tbody tr:nth-child(even) td { background: none; }
 /* ── Layout helpers ── */
 .cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; align-items: start; }
 .cols3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; align-items: start; }
+
+/* ── "View as PDF" button (title slide, bottom right) ── */
+.pdf-link {
+  position: absolute; right: 2.2rem; bottom: 1.8rem;
+  font-family: "JetBrains Mono", monospace; font-size: 0.66rem;
+  letter-spacing: 0.06em; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 3px;
+  padding: 0.32rem 0.65rem; text-decoration: none;
+}
+.pdf-link:hover { color: var(--accent2); border-color: var(--accent2); }
+@media print { .pdf-link { display: none !important; } }
 
 /* ── Looping clips (LoopVideo component) ── */
 .loop-media { width: 100%; height: 100%; object-fit: contain; display: block; }

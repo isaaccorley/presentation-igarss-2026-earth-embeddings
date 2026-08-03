@@ -28,7 +28,8 @@ Taxonomy, Ecosystem, and Standardized Access
 Heng Fang<span class="muted">* — KTH Royal Institute of Technology</span><br>
 Adam J. Stewart<span class="muted">* — Technical University of Munich</span><br>
 <u>Isaac Corley</u><span class="muted"> — Taylor Geospatial</span><br>
-Xiao Xiang Zhu<span class="muted"> — Technical University of Munich</span> &nbsp;·&nbsp; Hossein Azizpour<span class="muted"> — KTH</span>
+Xiao Xiang Zhu<span class="muted"> — Technical University of Munich</span><br>
+Hossein Azizpour<span class="muted"> — KTH Royal Institute of Technology</span>
 </div>
 
 <div class="note" style="margin-top:1.1rem;">
@@ -162,7 +163,7 @@ layout: default
 
 # Storage for one continent-year spans five orders of magnitude
 
-<div style="width:76%; margin:0.5rem auto 0;">
+<div style="width:63%; margin:0.4rem auto 0;">
 <LoopVideo name="storage" />
 </div>
 
@@ -337,6 +338,6 @@ Pick the family by task — implicit for location context, patch for retrieval, 
 <div style="font-family:'JetBrains Mono'; font-size:0.82rem; line-height:2.0;">
 Chapter &nbsp;<span style="color:var(--accent2)">Earth Embeddings — arXiv, August 2026</span><br>
 Survey &nbsp;&nbsp;<span style="color:var(--accent2)">github.com/hfangcat/Awesome-Geospatial-Embeddings</span><br>
-Code &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--accent2)">github.com/microsoft/torchgeo</span><br>
+Code &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--accent2)">github.com/torchgeo/torchgeo</span><br>
 Contact &nbsp;<span style="color:var(--accent2)">isaac.corley@taylorgeospatial.org</span>
 </div>

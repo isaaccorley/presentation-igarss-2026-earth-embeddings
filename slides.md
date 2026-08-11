@@ -64,13 +64,18 @@ layout: default
 
 # The model is not the map
 
-- Benchmarks hide failure modes. Ren corrupts a Santa Fe land cover map four different ways (salt noise, dilated boundaries, tiling seams, class confusion) and <span class="hl">all four keep an identical F1 of ≈ 0.73</span>. On the map they are four visibly different bugs.
-- Most model releases stop at weights and a benchmark table. Preprocessing, large-scale inference, and error discovery are left to whoever downloads the checkpoint.
-- Shipping the predictions, or the embeddings, means the authors deploy their own model and meet its caveats first. Nobody knows a model better than the team that trained it.
+<div class="cols2" style="margin-top:1rem; align-items:center;">
+<div>
 
-Embedding products apply this argument to representations, and the shipped data raises research questions of its own. Those questions are the rest of this talk.
+<div class="plot fig-ren-post"></div>
 
-<div class="cite">Ren — The Model is not the Map, christopherren.substack.com, Jun 2025 · Dynamic World land cover over Santa Fe, NM.</div>
+<p style="margin-top:1.3rem;">Four planted failure modes, <span class="hl">near-identical scores</span>, four visibly different maps. Ship the predictions and embeddings, not just the checkpoint — nobody knows a model better than the team that trained it.</p>
+
+</div>
+<div class="plot fig-ren-quartet" style="height:19rem;"></div>
+</div>
+
+<div class="cite">Ren — The Model is not the Map, christopherren.substack.com, Jun 2025 · Dynamic World built-area maps over Santa Fe, NM.</div>
 
 ---
 layout: default

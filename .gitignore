@@ -6,3 +6,4 @@ dist/
 media/
 sources/
 *.zip
+__pycache__/

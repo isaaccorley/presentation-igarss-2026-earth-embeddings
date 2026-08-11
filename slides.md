@@ -1,6 +1,7 @@
 ---
 theme: default
 title: 'Earth Embeddings as Products — IGARSS 2026'
+colorSchema: light
 highlighter: shiki
 lineNumbers: false
 fonts:
@@ -179,6 +180,21 @@ Patch products stay in the MB–GB range, while dense 10 m pixel products reach 
 layout: default
 ---
 
+<span class="kicker">Ecosystem · access</span>
+
+# Hosting and format choices decide whether a product is usable
+
+- **Hugging Face** enforces repo storage caps and API rate limits, so bulk pulls of TB-scale products throttle or fail.
+- **Tessera** ships raw `.npy` tiles with coordinates and metadata in a sidecar file. NumPy supports no HTTP range requests, so reads pull whole tiles that a <span class="hl">COG or Zarr would stream</span> — GeoTIFF re-implemented without its streaming or metadata.
+- **Google Satellite Embedding** was reachable only inside Earth Engine until **Taylor Geospatial rehosted it on Source Cooperative**, which adds free egress, an HTTP cross-region proxy, and CORS so browsers can stream it.
+- Several products are so **sparse in space and time** that no common footprint exists for comparing them.
+
+<div class="cite">Corley — The Technical Debt of Earth Embedding Products, cloudnativegeo.org, Feb 2026 · Google Satellite Embedding rehost: source.coop, 2026.</div>
+
+---
+layout: default
+---
+
 <span class="kicker">Ecosystem · reproducibility</span>
 
 # Patch products are reproducible, but pixel models are often proprietary
@@ -202,10 +218,9 @@ clicks: 1
 <div class="cols2">
 <div>
 
-- TorchGeo has loaders for **every known embedding product**: Clay, Major TOM, Earth Index, Copernicus-Embed, Presto, Tessera, Google.
-- It also ships the generating models and weights. **Presto and Tessera** were added upstream for this work.
+- TorchGeo has loaders for **every known embedding product**, plus the generating models and weights. **Presto and Tessera** were added upstream for this work.
 - Reprojection, rasterization, spatiotemporal intersection, and sampling are built in.
-- Reproducing these workflows used to require **four or more repositories** and custom loaders. With TorchGeo it is about 20 lines of code.
+- These workflows used to require **four or more repositories** and custom loaders. With TorchGeo each is about 20 lines of code.
 
 </div>
 <div style="margin-top:1.2rem;">
@@ -272,7 +287,7 @@ train_ds, test_ds = roi_split(
 
 ---
 layout: default
-class: tight left-table
+class: roomy left-table
 ---
 
 <span class="kicker">Does it work?</span>

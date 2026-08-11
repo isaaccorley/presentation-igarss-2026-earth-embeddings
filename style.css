@@ -92,6 +92,12 @@ tbody tr:nth-child(even) td { background: none; }
 .tight tbody td { padding: 0.06rem 0.5rem; line-height: 1.15; }
 .tight thead th { padding: 0.12rem 0.5rem; }
 
+/* per-slide roomier variant so a short table fills the slide: `class: roomy` */
+.roomy table { font-size: 0.8rem; margin-top: 1.1rem; }
+.roomy tbody td { padding: 0.3rem 0.6rem; line-height: 1.35; }
+.roomy thead th { padding: 0.28rem 0.6rem; }
+.roomy p { margin-top: 1.2rem; }
+
 /* ── Cover slides (title + closing): white too, just calmer ── */
 .slidev-layout.cover {
   background: var(--paper); color: var(--ink);

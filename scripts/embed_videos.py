@@ -24,7 +24,7 @@ from pikepdf import Array, Dictionary, Name, Pdf, String
 CLIPS = [
     (1, "public/loop-pipeline.mp4", (74.9, 0.7, 659.5, 207.4)),
     (7, "public/loop-storage.mp4", (158.4, 79.2, 576.0, 267.8)),
-    (9, "public/loop-search.mp4", (376.6, 10.8, 699.1, 253.4)),
+    (10, "public/loop-search.mp4", (376.6, 10.8, 699.1, 253.4)),
 ]
 
 

@@ -48,7 +48,7 @@ clicks: 1
 
 # Embedding products move model inference out of the user's workflow
 
-Public EO archives are already petabyte-scale. NASA's EOSDIS alone holds <span class="hl">178.7 PB</span> and grows by 160 TB per day. Foundation models can summarize this data, but every user re-pays the preprocessing and GPU bill. Pre-computed embedding products run the model once and ship the vectors as reusable data.
+NASA's EOSDIS alone holds <span class="hl">178.7 PB</span> of imagery and grows by 160 TB per day. Foundation models can summarize this archive, but every team re-downloads the same pixels and re-pays the same preprocessing and GPU inference. Embedding products run the model once and ship the vectors as reusable data.
 
 <div style="width:88%; margin:0.7rem auto 0;">
 <LoopVideo name="pipeline" />
@@ -313,7 +313,7 @@ layout: default
 
 <span class="kicker">Guidance</span>
 
-# Recommended formats, provenance, and compression for new products
+# Ship cloud-native formats, in-file metadata, and int8 vectors
 
 <div class="cols2">
 <div>

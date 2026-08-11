@@ -33,6 +33,7 @@ h1 {
 }
 h2 { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 1.05rem; margin: 0.6rem 0 0.2rem; }
 p { margin: 0.45rem 0; }
+.slidev-layout p, .slidev-layout h1 + p { opacity: 1; } /* theme-default dims h1+p "subtitles" to 0.5 */
 ul { margin: 0.3rem 0; padding-left: 1.1rem; }
 li { margin: 0.32rem 0; }
 li::marker { color: var(--accent2); }

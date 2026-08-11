@@ -46,7 +46,7 @@ clicks: 1
 
 <span class="kicker">Motivation</span>
 
-# Embedding products move model inference out of the user's workflow
+# Run the model once, ship the vectors
 
 NASA's EOSDIS alone holds <span class="hl">178.7 PB</span> of imagery and grows by 160 TB per day. Foundation models can summarize this archive, but every team re-downloads the same pixels and re-pays the same preprocessing and GPU inference. Embedding products run the model once and ship the vectors as reusable data.
 
@@ -64,12 +64,12 @@ layout: default
 
 # The model is not the map
 
-<div class="cols2" style="margin-top:1rem; align-items:center;">
+<div class="cols2" style="margin-top:0.6rem; align-items:center;">
 <div>
 
-<div class="plot fig-ren-post"></div>
+<div class="plot fig-ren-post" style="width:92%;"></div>
 
-<p style="margin-top:1.3rem;">Four planted failure modes, <span class="hl">near-identical scores</span>, four visibly different maps. Ship the predictions and embeddings, not just the checkpoint — nobody knows a model better than the team that trained it.</p>
+<p style="margin-top:0.9rem;">Ren corrupts one land cover map four ways. Every version scores <span class="hl">F1 ≈ 0.73–0.74</span>, but each error is obvious on the map. Ship predictions and embeddings, not just checkpoints; nobody knows a model better than the team that trained it.</p>
 
 </div>
 <div class="plot fig-ren-quartet" style="height:19rem;"></div>
@@ -114,7 +114,7 @@ layout: default
 
 <span class="kicker">Taxonomy</span>
 
-# Three families: location, patch, and pixel embeddings
+# Three families of Earth embeddings
 
 <div class="plot fig-types" style="height:19.5rem; margin-top:0.4rem;"></div>
 
@@ -126,7 +126,7 @@ layout: default
 
 <span class="kicker">Landscape · 1 of 2</span>
 
-# Patch products summarize km-scale tiles for retrieval
+# Patch products summarize km-scale tiles
 
 <div class="note">All known patch embedding products as of July 2026. *sparse spatial or temporal coverage.</div>
 
@@ -148,7 +148,7 @@ layout: default
 
 <span class="kicker">Landscape · 2 of 2</span>
 
-# Pixel products store one vector per pixel for each year
+# Pixel products store a vector per pixel-year
 
 <div class="note">All known pixel embedding products as of July 2026. Every product is built from annual time series. *sparse coverage.</div>
 
@@ -169,12 +169,12 @@ layout: default
 
 <span class="kicker">Ecosystem</span>
 
-# Each product ships with its own formats, grids, and hosting
+# Formats, grids, and hosting differ per product
 
-- Products are scattered across **Source Cooperative** (Clay, Earth Index), Hugging Face (Major TOM, Copernicus-Embed), Google Earth Engine (Google, Presto), and private university servers (Tessera).
-- Formats range from **GeoParquet** to GeoTIFF with implicit CRS assumptions to raw NumPy arrays with no CRS or bounds ("numbers and a prayer").
-- Each product defines its own **tiling grid** (Major TOM grid, MGRS, custom), so cross-product comparison starts with reprojection.
-- **One flipped coordinate** in the Google Satellite Embedding rasters required patches to <span class="hl">GDAL, rasterio, and TorchGeo</span> before standard tools could read them.
+- Products are scattered across **Source Cooperative** (Clay, Earth Index), Hugging Face (Major TOM), Earth Engine (Google, Presto), and private servers (Tessera).
+- Formats span **GeoParquet**, GeoTIFF with implicit CRS assumptions, and raw NumPy arrays with no CRS or bounds ("numbers and a prayer").
+- Each product defines its own **tiling grid**, so any cross-product comparison starts with reprojection.
+- **One flipped coordinate** in the Google rasters required patches to <span class="hl">GDAL, rasterio, and TorchGeo</span>.
 
 Every team solves distribution independently. The integration tax is paid once per product, per user.
 
@@ -187,9 +187,9 @@ clicks: 1
 
 <span class="kicker">Ecosystem · cost</span>
 
-# Storage for one continent-year spans five orders of magnitude
+# Storage costs span five orders of magnitude
 
-<div style="width:63%; margin:0.4rem auto 0;">
+<div style="width:57%; margin:0.1rem auto 0;">
 <LoopVideo name="storage" />
 </div>
 
@@ -203,12 +203,12 @@ layout: default
 
 <span class="kicker">Ecosystem · access</span>
 
-# Hosting and format choices decide whether a product is usable
+# Hosting and format choices decide usability
 
-- **Hugging Face** enforces repo storage caps and API rate limits, so bulk pulls of TB-scale products throttle or fail.
-- **Tessera** ships raw `.npy` tiles with coordinates and metadata in a sidecar file. NumPy supports no HTTP range requests, so reads pull whole tiles that a <span class="hl">COG or Zarr would stream</span> — GeoTIFF re-implemented without its streaming or metadata.
-- **Google Satellite Embedding** was reachable only inside Earth Engine until **Taylor Geospatial rehosted it on Source Cooperative**, which adds free egress, an HTTP cross-region proxy, and CORS so browsers can stream it.
-- Several products are so **sparse in space and time** that no common footprint exists for comparing them.
+- **Hugging Face** enforces storage caps and API rate limits, so bulk pulls of TB-scale products throttle or fail.
+- **Tessera** ships `.npy` tiles plus a metadata sidecar. NumPy has no HTTP range requests, so reads pull whole tiles that a <span class="hl">COG or Zarr would stream</span> — GeoTIFF minus its streaming and metadata.
+- **Google Satellite Embedding** lived only in Earth Engine until **Taylor Geospatial rehosted it on Source Cooperative**, with free egress, an HTTP cross-region proxy, and CORS for browser streaming.
+- Several products are so **sparse in space and time** that no common footprint exists for comparison.
 
 <div class="cite">Corley — The Technical Debt of Earth Embedding Products, cloudnativegeo.org, Feb 2026 · Google Satellite Embedding rehost: source.coop, 2026.</div>
 
@@ -218,12 +218,12 @@ layout: default
 
 <span class="kicker">Ecosystem · reproducibility</span>
 
-# Patch products are reproducible, but pixel models are often proprietary
+# Only patch products are fully reproducible
 
-- **Clay, Earth Index, and Copernicus-Embed** release the full pipeline (code, weights, data, embeddings) under permissive licenses.
-- **Major TOM**'s CC-BY-SA pretraining data makes every derived embedding copyleft, which deters commercial users.
-- **AlphaEarth Foundations and ESDNet** keep code and weights proprietary. The embeddings are CC-BY, but no one outside can regenerate or audit them.
-- **No product ships checksummed data.** Upstream archives keep reprocessing imagery, so the exact training and inference inputs are already unrecoverable.
+- **Clay, Earth Index, and Copernicus-Embed** release code, weights, and data under permissive licenses.
+- **Major TOM**'s CC-BY-SA pretraining data makes its embeddings copyleft, deterring commercial users.
+- **AlphaEarth and ESDNet** keep code and weights proprietary. The embeddings are CC-BY, but no one outside can regenerate or audit them.
+- **No product ships checksums.** Archives keep reprocessing imagery; exact inputs are unrecoverable.
 
 <div class="cite">Earth Embeddings (book chapter, 2026), Tables 4–6 — license provenance from data to weights to embeddings.</div>
 
@@ -234,7 +234,7 @@ clicks: 1
 
 <span class="kicker">Standardized access</span>
 
-# TorchGeo treats embeddings as first-class geospatial datasets
+# TorchGeo makes embeddings first-class datasets
 
 <div class="cols2">
 <div>
@@ -313,7 +313,7 @@ class: roomy left-table
 
 <span class="kicker">Does it work?</span>
 
-# Embeddings improve mapping tasks but degrade under spatial transfer
+# Embeddings improve mapping, not spatial transfer
 
 | Task | Embeddings | Finding |
 |------|------------|---------|
@@ -334,7 +334,7 @@ layout: default
 
 <span class="kicker">Guidance</span>
 
-# Ship cloud-native formats, in-file metadata, and int8 vectors
+# Ship streamable formats, metadata, and int8
 
 <div class="cols2">
 <div>
@@ -354,7 +354,7 @@ Ship a model card with sensors, temporal window, CRS and grid, dtype, quantizati
 - **int8 quantization** has negligible accuracy cost. Google and Tessera already ship int8.
 - **PCA to 64 dimensions with int8** gives 64× compression with <2% accuracy loss.
 - **Binary quantization** adds another 32× and still recovers ~65% of float32 nearest neighbors, which is enough for candidate retrieval.
-- Ship a **runnable benchmark**, not a private leaderboard.
+- Ship a **runnable benchmark**, not a leaderboard.
 
 </div>
 </div>
@@ -368,10 +368,10 @@ class: cover
 
 <span class="kicker">Takeaways</span>
 
-# Embeddings are usable today; standards are the remaining work
+# Embeddings work; standards lag
 
 <div style="font-size:0.95rem; line-height:1.75; margin-top:0.6rem; max-width:44rem;">
-Pick the family by task: implicit for location context, patch for retrieval, pixel for dense mapping. Validate under geographic splits against simple baselines. Open problems are ocean and atmosphere coverage, uncertainty layers, and shared benchmarks (identical models differ by more than ten points across papers).
+Pick the family by task: implicit for location context, patch for retrieval, pixel for dense mapping. Validate under geographic splits against simple baselines. Open problems are standardized formats and provenance, ocean and atmosphere coverage, uncertainty layers, and shared benchmarks (identical models differ by more than ten points across papers).
 </div>
 
 <div class="rule"></div>

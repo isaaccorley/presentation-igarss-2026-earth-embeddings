@@ -118,7 +118,7 @@ layout: default
 
 <div class="plot fig-types" style="height:19.5rem; margin-top:0.4rem;"></div>
 
-<div class="cite">Stewart, Fang, Corley, Zhu — Earth Embeddings (book chapter, 2026), Fig. 1; figure design adapted from Klemmer et al., 2025.</div>
+<div class="cite">Stewart, Fang, Corley, Zhu — Earth Embeddings (book chapter, 2026), Fig. 1; figure design adapted from Klemmer et al., 2025 (EarthArXiv).</div>
 
 ---
 layout: default
@@ -249,7 +249,7 @@ clicks: 1
 </div>
 </div>
 
-<div class="cite">Stewart et al., 2022 — TorchGeo · Fang et al., IGARSS 2026, §IV.</div>
+<div class="cite">Stewart et al., 2025 — TorchGeo, ACM TSAS · Fang et al., IGARSS 2026, §IV.</div>
 
 ---
 layout: default
@@ -326,7 +326,7 @@ class: roomy left-table
 
 Performance drops under **spatial transfer**, and annual composites wash out sub-annual dynamics. Validate with geographic splits and simple baselines before trusting any product.
 
-<div class="cite">Zvonkov et al. · Ishikawa et al., 2025 · Cheng et al., 2026 · Pettersson & Daoud, 2025 · Corley et al., 2026 · van der Plas et al., 2026 · Ma et al., 2026.</div>
+<div class="cite">Zvonkov et al., 2025 · Ishikawa et al., 2025 · Cheng et al., 2026 · Pettersson & Daoud, 2025 · Corley et al., 2026 · van der Plas et al., 2026 · Ma et al., 2026.</div>
 
 ---
 layout: default
@@ -377,7 +377,7 @@ Pick the family by task: implicit for location context, patch for retrieval, pix
 <div class="rule"></div>
 
 <div style="font-family:'JetBrains Mono'; font-size:0.82rem; line-height:2.0;">
-Chapter &nbsp;<span style="color:var(--accent2)">Earth Embeddings — arXiv, August 2026</span><br>
+Chapter &nbsp;<span style="color:var(--accent2)">arxiv.org/abs/2608.03410</span><br>
 Survey &nbsp;&nbsp;<span style="color:var(--accent2)">github.com/hfangcat/Awesome-Geospatial-Embeddings</span><br>
 Code &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--accent2)">github.com/torchgeo/torchgeo</span><br>
 Contact &nbsp;<span style="color:var(--accent2)">isaac.corley@taylorgeospatial.org</span>

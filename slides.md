@@ -46,15 +46,46 @@ clicks: 1
 
 <span class="kicker">Motivation</span>
 
-# Run the model once, ship the vectors
+# Run the model once, reuse the vectors
 
-NASA's EOSDIS alone holds <span class="hl">178.7 PB</span> of imagery and grows by 160 TB per day. Foundation models can summarize this archive, but every team re-downloads the same pixels and re-pays the same preprocessing and GPU inference. Embedding products run the model once and ship the vectors as reusable data.
+NASA's EOSDIS alone holds <span class="hl">178.7 PB</span> of imagery and grows by 160 TB per day. Every team re-downloads the same pixels and re-pays the same preprocessing and GPU inference. Embedding products run the model once and distribute the vectors as reusable data.
 
 <div style="width:88%; margin:0.7rem auto 0;">
 <LoopVideo name="pipeline" />
 </div>
 
 <div class="cite">NASA ESDS annual metrics, FY2025 · Bommasani et al., 2021 — foundation model framing.</div>
+
+---
+layout: default
+clicks: 1
+---
+
+<span class="kicker">Motivation · retrieval</span>
+
+# The Earth is one large document
+
+<div class="cols2" style="grid-template-columns: 1.15fr 1fr; margin-top:0.5rem; align-items:center;">
+<div>
+
+Embedding retrieval matured in image search and in document retrieval for LLMs (RAG). The recipe is to chunk, embed, index, and retrieve. The Earth archive is one enormous document.
+
+But there is no obvious chunk:
+
+<div class="qgrid">
+<div>What is the <strong>spatial extent</strong> of a chunk?</div>
+<div>What is the <strong>resolution</strong> of each point in it?</div>
+<div>One <strong>timestamp</strong>, or a time series?</div>
+<div>Which <strong>signal</strong> (MSI band, SAR, elevation)?</div>
+</div>
+
+</div>
+<div style="margin-top:0.2rem;">
+<LoopVideo name="search" />
+</div>
+</div>
+
+<div class="cite">Lewis et al., 2020 — retrieval-augmented generation · clip: query-by-example over a patch embedding product.</div>
 
 ---
 layout: default
@@ -69,7 +100,7 @@ layout: default
 
 <div class="plot fig-ren-post" style="width:92%;"></div>
 
-<p style="margin-top:0.9rem;">Ren corrupts one land cover map four ways. Every version scores <span class="hl">F1 ≈ 0.73–0.74</span>, but each error is obvious on the map. Ship predictions and embeddings, not just checkpoints; nobody knows a model better than the team that trained it.</p>
+<p style="margin-top:0.9rem;">Ren corrupts one land cover map four ways. Every version scores <span class="hl">F1 ≈ 0.73–0.74</span>, but each error is obvious on the map. Release predictions and embeddings alongside checkpoints. Nobody knows a model better than the team that trained it.</p>
 
 </div>
 <div class="plot fig-ren-quartet" style="height:19rem;"></div>
@@ -90,14 +121,14 @@ layout: default
 
 ## Foundation models (dynamic inference)
 
-These are distributed as public weights (DOFA, OlmoEarth). Users manage preprocessing and GPU inference themselves. This is flexible but raises a hardware and engineering barrier.
+Distributed as public weights (DOFA, OlmoEarth). Users manage preprocessing and GPU inference themselves. This is flexible but raises a hardware and engineering barrier.
 
 </div>
 <div>
 
 ## Embedding products (static data)
 
-These are distributed as pre-computed vector archives (Google Satellite Embedding). The assets are frozen and versioned, so analysis proceeds without the model or its compute.
+Distributed as pre-computed vector archives (Google Satellite Embedding). The assets are frozen and versioned, so analysis proceeds without the model or its compute.
 
 </div>
 </div>
@@ -107,6 +138,21 @@ A product is pinned to the data snapshot it was computed on, so <span class="hl"
 </p>
 
 <div class="cite">Fang, Stewart, Corley, Zhu, Azizpour — Earth Embeddings as Products, IGARSS 2026, §II.</div>
+
+---
+layout: default
+---
+
+<span class="kicker">Scope · reproducibility</span>
+
+# Paper metrics do not reproduce from the products
+
+The AlphaEarth and Tessera papers report benchmark numbers from internal pipelines. The same tasks, evaluated on the <span class="hl">released annual embedding products</span>, give different numbers.
+
+- The papers embed **exact input stacks**. The products are **annual composites** over reprocessed archives.
+- Benchmark numbers for a product should describe the **downloadable data**, not the model behind it.
+
+<div class="cite">Earth Embeddings (book chapter, 2026), §5 · Corley et al., 2026 — EuroSAT-Embed re-evaluation of AlphaEarth, Tessera, OlmoEarth.</div>
 
 ---
 layout: default
@@ -167,6 +213,42 @@ layout: default
 layout: default
 ---
 
+<span class="kicker">Landscape · industry</span>
+
+# Industry is selling embeddings as the product
+
+<div class="cols3 industry" style="margin-top:1.3rem;">
+<div>
+
+## Descartes Labs <span class="muted">2017</span>
+
+**GeoVisual Search** was the first planet-scale visual search over satellite imagery features. A query patch of a wind turbine returns wind turbines worldwide. It predates the current products by eight years.
+
+</div>
+<div>
+
+## Earth Genome <span class="muted">2025</span>
+
+**Earth Index** packages Clay embeddings on Source Cooperative into a search service for investigative journalists and conservation teams, who use it to find mining sites, airstrips, and feedlots.
+
+</div>
+<div>
+
+## LGND <span class="muted">2025</span>
+
+Raised **$9M** in 2025 to build services on geographic embeddings, and published the full global Clay v1.5 float32 corpus on Source Cooperative.
+
+</div>
+</div>
+
+<p style="margin-top:1.3rem;">All three build their products on the embeddings rather than the model weights.</p>
+
+<div class="cite">TechCrunch, Mar 2017 — GeoVisual Search · Ingold — Embeddings for All, Earth Genome, 2025 · LGND seed round, PR Newswire, Jul 2025.</div>
+
+---
+layout: default
+---
+
 <span class="kicker">Ecosystem</span>
 
 # Formats, grids, and hosting differ per product
@@ -206,11 +288,11 @@ layout: default
 # Hosting and format choices decide usability
 
 - **Hugging Face** enforces storage caps and API rate limits, so bulk pulls of TB-scale products throttle or fail.
-- **Tessera** ships `.npy` tiles plus a metadata sidecar. NumPy has no HTTP range requests, so reads pull whole tiles that a <span class="hl">COG or Zarr would stream</span> — GeoTIFF minus its streaming and metadata.
-- **Google Satellite Embedding** lived only in Earth Engine until **Taylor Geospatial rehosted it on Source Cooperative**, with free egress, an HTTP cross-region proxy, and CORS for browser streaming.
+- **Tessera** distributes `.npy` tiles plus a metadata sidecar. NumPy has no HTTP range requests, so reads pull whole tiles that a <span class="hl">COG or Zarr would stream</span>. It is GeoTIFF without the streaming or the metadata.
+- The **AlphaEarth embeddings** were available only through Earth Engine or a requester-pays bucket, where the reader pays the egress. **Taylor Geospatial rehosted them in a non-requester-pays bucket on Source Cooperative**, with free egress, HTTP range reads, and CORS for browser streaming.
 - Several products are so **sparse in space and time** that no common footprint exists for comparison.
 
-<div class="cite">Corley — The Technical Debt of Earth Embedding Products, cloudnativegeo.org, Feb 2026 · Google Satellite Embedding rehost: source.coop, 2026.</div>
+<div class="cite">Corley — The Technical Debt of Earth Embedding Products, cloudnativegeo.org, Feb 2026 · AEF rehost: source.coop, 2026.</div>
 
 ---
 layout: default
@@ -218,93 +300,15 @@ layout: default
 
 <span class="kicker">Ecosystem · reproducibility</span>
 
-# Only patch products are fully reproducible
+# No product is fully reproducible
 
 - **Clay, Earth Index, and Copernicus-Embed** release code, weights, and data under permissive licenses.
+- **Tessera** releases code, weights, and embeddings openly, but records <span class="hl">no metadata about which inputs built each tile</span>, so its outputs cannot be audited.
 - **Major TOM**'s CC-BY-SA pretraining data makes its embeddings copyleft, deterring commercial users.
-- **AlphaEarth and ESDNet** keep code and weights proprietary. The embeddings are CC-BY, but no one outside can regenerate or audit them.
-- **No product ships checksums.** Archives keep reprocessing imagery; exact inputs are unrecoverable.
+- **AlphaEarth and ESDNet** keep code and weights proprietary. The embeddings are CC-BY, but no one outside can regenerate them.
+- **No product provides checksums.** Archives keep reprocessing imagery; exact inputs are unrecoverable.
 
 <div class="cite">Earth Embeddings (book chapter, 2026), Tables 4–6 — license provenance from data to weights to embeddings.</div>
-
----
-layout: default
-clicks: 1
----
-
-<span class="kicker">Standardized access</span>
-
-# TorchGeo makes embeddings first-class datasets
-
-<div class="cols2">
-<div>
-
-- TorchGeo has loaders for **every known embedding product**, plus the generating models and weights. **Presto and Tessera** were added upstream for this work.
-- Reprojection, rasterization, spatiotemporal intersection, and sampling are built in.
-- These workflows used to require **four or more repositories** and custom loaders. With TorchGeo each is about 20 lines of code.
-
-</div>
-<div style="margin-top:1.2rem;">
-<LoopVideo name="search" />
-</div>
-</div>
-
-<div class="cite">Stewart et al., 2025 — TorchGeo, ACM TSAS · Fang et al., IGARSS 2026, §IV.</div>
-
----
-layout: default
-class: codesm
----
-
-<span class="kicker">Case studies</span>
-
-# Search and land cover mapping in TorchGeo
-
-<div class="cols2">
-<div>
-
-**Search and retrieval**: query by example
-
-```python
-# torchgeo.datasets / torchgeo.models
-earthindex = EarthIndexEmbeddings('data/ei')
-s2 = Sentinel2('data/s2')
-image = s2[xmin:xmax, ymin:ymax]['image'] / 10_000
-
-model = vit_small_patch14_dinov2(
-    ViTSmall14_DINOv2_Weights.SENTINEL2_ALL_SOFTCON)
-embed = model(image)
-
-cos = CosineSimilarity(dim=0)
-for sample in iter(earthindex):
-    sim = cos(embed, sample['embedding'])
-    ...  # keep the argmax, plot the match
-```
-
-</div>
-<div>
-
-**Land cover mapping**: crop types across Europe
-
-```python
-# torchgeo.datasets / torchgeo.samplers
-tessera = TesseraEmbeddings('data/tessera')
-eurocrops = EuroCrops('data/ec', download=True)
-dataset = tessera & eurocrops  # intersection
-
-train_roi = box(-10, 35, 10, 60)  # West EU
-test_roi  = box( 10, 35, 30, 60)  # East EU
-train_ds, test_ds = roi_split(
-    dataset, [train_roi, test_roi])
-
-# random patches -> fit a k-NN / linear probe
-# gridded patches -> stitch a map of Europe
-```
-
-</div>
-</div>
-
-<div class="cite">Earth Embeddings (book chapter, 2026), §4 Listings 1–2 — abridged; geographic train/test splits are built in.</div>
 
 ---
 layout: default
@@ -332,9 +336,111 @@ Performance drops under **spatial transfer**, and annual composites wash out sub
 layout: default
 ---
 
+<span class="kicker">Guidance · choosing</span>
+
+# No one knows which product is best for your task
+
+<div class="cols2" style="grid-template-columns: 1.35fr 1fr; margin-top:0.5rem; align-items:center;">
+<div>
+
+An audit of 152 geospatial foundation model papers found **46 cross-paper disagreements of ≥10 points** for the same model, benchmark, and protocol.
+
+94 of 126 papers use a pretraining configuration no other paper uses. **39% release no weights**, so their results cannot be re-run at all.
+
+We built **torchgeo-bench**, a maintained harness for frozen backbones with shared datasets, consistent probes, and bootstrapped confidence intervals.
+
+</div>
+<div class="plot paperpage fig-nooneknows" style="height:19rem;"></div>
+</div>
+
+<div class="cite">Corley et al., 2026 — No One Knows the SOTA in GFMs, arXiv:2605.12678 · torchgeo.org/torchgeo-bench.</div>
+
+---
+layout: default
+---
+
+<span class="kicker">Guidance · combining</span>
+
+# Products are complementary
+
+<div class="cols2" style="grid-template-columns: 1.35fr 1fr; margin-top:0.5rem; align-items:center;">
+<div>
+
+You do not have to pick one product.
+
+Fusing AlphaEarth, Tessera, GeoCLIP, and SatCLIP beats the best single product on <span class="hl">4 of 6 downstream tasks</span>.
+
+Complementarity is task- and location-dependent, so a concatenated probe is a cheap first experiment before committing to one product.
+
+</div>
+<div class="plot paperpage fig-bettertogether" style="height:19rem;"></div>
+</div>
+
+<div class="cite">van der Plas et al., 2026 — Better Together, arXiv:2605.18667.</div>
+
+---
+layout: default
+---
+
+<span class="kicker">Open problems</span>
+
+# Smaller, sliceable vectors are underexplored
+
+<div class="cols2" style="grid-template-columns: 1.2fr 1fr; margin-top:0.6rem; align-items:center;">
+<div>
+
+- **Quantization.** Google and Tessera use int8 at no measurable cost. Nothing goes lower, yet binary recovers ~65% of float32 nearest neighbors.
+- **Disentangled representations.** VAE-style training gives each dimension a separate meaning. Untried for Earth embeddings.
+- **Matryoshka learning.** Tessera v2, Clay, and our **MIND location encoder** train nested dimensions, so users truncate to their budget. No other products do.
+
+</div>
+<div class="matryoshka">
+<div class="mrow"><div class="mbar" style="width:100%; background:#D95F0E;"></div><span>full width</span></div>
+<div class="mrow"><div class="mbar" style="width:50%; background:#EC8C3C;"></div><span>1/2</span></div>
+<div class="mrow"><div class="mbar" style="width:25%; background:#F7B26A;"></div><span>1/4</span></div>
+<div class="mrow"><div class="mbar" style="width:12.5%; background:#FCD39E;"></div><span>1/8</span></div>
+<div class="mnote">the leading dimensions form a usable embedding at any width</div>
+</div>
+</div>
+
+<div class="cite">Kusupati et al., 2022 — Matryoshka representation learning · Corley & Robinson, 2026 — Compressing Earth Embeddings · MIND: Corley et al., 2026.</div>
+
+---
+layout: default
+clicks: 1
+class: demos
+---
+
+<span class="kicker">Demos</span>
+
+# Compressed embeddings run in the browser
+
+<div class="cols2" style="margin-top:0.3rem;">
+<div>
+
+<div style="width:88%; margin:0 auto;"><LoopVideo name="terrabit" /></div>
+
+<p class="democap"><strong>TerraBit</strong> — 50M Clay v1.5 patches binarized to 128 bytes each, streamed from a static Source Cooperative bucket. Hamming search runs in a Web Worker with no backend or API.</p>
+
+</div>
+<div>
+
+<div style="width:88%; margin:0 auto;"><LoopVideo name="deltabit" /></div>
+
+<p class="democap"><strong>DeltaBit</strong> — AlphaEarth pixel differences at 8 bytes per pixel (PCA-8 + int8) as XYZ GeoTIFF tiles. The user labels, trains, and maps change in the browser (Seattle, 2020 → 2024).</p>
+
+</div>
+</div>
+
+<div class="cite">Corley & Robinson — TerraBit · Robinson & Corley — DeltaBit, geospatialml.com, Apr 2026 · embeddings hosted on source.coop.</div>
+
+---
+layout: default
+---
+
 <span class="kicker">Guidance</span>
 
-# Ship streamable formats, metadata, and int8
+# Streamable formats, embedded metadata, and int8
 
 <div class="cols2">
 <div>
@@ -346,15 +452,13 @@ layout: default
 | Pixel, snapshot | GeoTIFF or GeoZarr |
 | Pixel, time series | GeoZarr |
 
-Ship a model card with sensors, temporal window, CRS and grid, dtype, quantization transform, and license. Store the metadata in the files, not the docs.
-
 </div>
 <div>
 
-- **int8 quantization** has negligible accuracy cost. Google and Tessera already ship int8.
-- **PCA to 64 dimensions with int8** gives 64× compression with <2% accuracy loss.
-- **Binary quantization** adds another 32× and still recovers ~65% of float32 nearest neighbors, which is enough for candidate retrieval.
-- Ship a **runnable benchmark**, not a leaderboard.
+- Provide a **model card**: sensors, temporal window, CRS, grid, dtype, quantization, license.
+- Store metadata **inside the files** rather than in separate docs.
+- **int8 by default**; PCA to 64 dims costs <2% accuracy for 64× compression.
+- **Runnable benchmarks**, not leaderboards.
 
 </div>
 </div>
@@ -366,19 +470,25 @@ layout: cover
 class: cover
 ---
 
-<span class="kicker">Takeaways</span>
+<span class="kicker">Closing</span>
 
-# Embeddings work; standards lag
+# Takeaways and open problems
 
 <div style="font-size:0.95rem; line-height:1.75; margin-top:0.6rem; max-width:44rem;">
-Pick the family by task: implicit for location context, patch for retrieval, pixel for dense mapping. Validate under geographic splits against simple baselines. Open problems are standardized formats and provenance, ocean and atmosphere coverage, uncertainty layers, and shared benchmarks (identical models differ by more than ten points across papers).
+Pick the family by task: implicit for location context, patch for retrieval, pixel for dense mapping. Validate under geographic splits against simple baselines, and consider fusing products instead of picking one. Open problems are standardized formats and provenance, ocean and atmosphere coverage, uncertainty layers, and shared benchmarks (identical models differ by more than ten points across papers).
 </div>
 
 <div class="rule"></div>
 
+<div style="display:flex; align-items:center; gap:2.4rem;">
 <div style="font-family:'JetBrains Mono'; font-size:0.82rem; line-height:2.0;">
 Chapter &nbsp;<span style="color:var(--accent2)">arxiv.org/abs/2608.03410</span><br>
 Survey &nbsp;&nbsp;<span style="color:var(--accent2)">github.com/hfangcat/Awesome-Geospatial-Embeddings</span><br>
-Code &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--accent2)">github.com/torchgeo/torchgeo</span><br>
+Bench &nbsp;&nbsp;&nbsp;<span style="color:var(--accent2)">torchgeo.org/torchgeo-bench</span><br>
 Contact &nbsp;<span style="color:var(--accent2)">isaac.corley@taylorgeospatial.org</span>
+</div>
+<div>
+<div class="qr-slides"></div>
+<div style="font-family:'JetBrains Mono'; font-size:0.68rem; margin-top:0.4rem; text-align:center;">these slides</div>
+</div>
 </div>

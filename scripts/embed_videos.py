@@ -23,8 +23,10 @@ from pikepdf import Array, Dictionary, Name, Pdf, String
 # (0-based page index, mp4 path, rect in PDF points [x0, y0, x1, y1])
 CLIPS = [
     (1, "public/loop-pipeline.mp4", (75.8, 17.8, 659.3, 236.8)),
-    (8, "public/loop-storage.mp4", (178.6, 127.4, 556.5, 296.8)),
-    (11, "public/loop-search.mp4", (377.2, 40.8, 699.1, 282.4)),
+    (2, "public/loop-search.mp4", (399.6, 69.7, 699.1, 294.4)),
+    (11, "public/loop-storage.mp4", (178.6, 127.4, 556.5, 296.8)),
+    (18, "public/loop-terrabit.mp4", (55.3, 127.5, 338.6, 296.8)),
+    (18, "public/loop-deltabit.mp4", (396.5, 132.3, 679.8, 296.8)),
 ]
 
 

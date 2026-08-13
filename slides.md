@@ -255,7 +255,6 @@ layout: default
 <div>
 
 ## Foundation models
-<div class="note" style="margin:-0.35rem 0 0.7rem;">dynamic inference</div>
 
 Distributed as public weights (DOFA, OlmoEarth). Users manage preprocessing and GPU inference themselves. This is flexible but raises a hardware and engineering barrier.
 
@@ -263,7 +262,6 @@ Distributed as public weights (DOFA, OlmoEarth). Users manage preprocessing and 
 <div>
 
 ## Embedding products
-<div class="note" style="margin:-0.35rem 0 0.7rem;">static data</div>
 
 Distributed as pre-computed vector archives (Google Satellite Embedding). The assets are frozen and versioned, so analysis proceeds without the model or its compute.
 

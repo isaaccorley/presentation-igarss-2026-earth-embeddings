@@ -91,73 +91,6 @@ But there is no obvious chunk:
 layout: default
 ---
 
-<span class="kicker">Motivation · practice</span>
-
-# The model is not the map
-
-<div class="cols2" style="margin-top:0.6rem; align-items:center;">
-<div>
-
-<div class="plot fig-ren-post" style="width:92%;"></div>
-
-<p style="margin-top:0.9rem;">Ren corrupts one land cover map four ways. Every version scores <span class="hl">F1 ≈ 0.73–0.74</span>, but each error is obvious on the map. Release predictions and embeddings alongside checkpoints. Nobody knows a model better than the team that trained it.</p>
-
-</div>
-<div class="plot fig-ren-quartet" style="height:19rem;"></div>
-</div>
-
-<div class="cite">Ren — The Model is not the Map, christopherren.substack.com, Jun 2025 · Dynamic World built-area maps over Santa Fe, NM.</div>
-
----
-layout: default
----
-
-<span class="kicker">Scope</span>
-
-# A foundation model is not an embedding product
-
-<div class="cols2" style="margin-top:0.9rem;">
-<div>
-
-## Foundation models (dynamic inference)
-
-Distributed as public weights (DOFA, OlmoEarth). Users manage preprocessing and GPU inference themselves. This is flexible but raises a hardware and engineering barrier.
-
-</div>
-<div>
-
-## Embedding products (static data)
-
-Distributed as pre-computed vector archives (Google Satellite Embedding). The assets are frozen and versioned, so analysis proceeds without the model or its compute.
-
-</div>
-</div>
-
-<p style="margin-top:1.2rem;">
-A product is pinned to the data snapshot it was computed on, so <span class="hl">results measured on a product do not generalize to the model behind it</span>.
-</p>
-
-<div class="cite">Fang, Stewart, Corley, Zhu, Azizpour — Earth Embeddings as Products, IGARSS 2026, §II.</div>
-
----
-layout: default
----
-
-<span class="kicker">Scope · reproducibility</span>
-
-# Paper metrics do not reproduce from the products
-
-The AlphaEarth and Tessera papers report benchmark numbers from internal pipelines. The same tasks, evaluated on the <span class="hl">released annual embedding products</span>, give different numbers.
-
-- The papers embed **exact input stacks**. The products are **annual composites** over reprocessed archives.
-- Benchmark numbers should describe the **downloadable data** rather than the model.
-
-<div class="cite">Earth Embeddings (book chapter, 2026), §5 · Corley et al., 2026 — EuroSAT-Embed re-evaluation of AlphaEarth, Tessera, OlmoEarth.</div>
-
----
-layout: default
----
-
 <span class="kicker">Taxonomy</span>
 
 # Three families of Earth embeddings
@@ -312,6 +245,73 @@ layout: default
 
 ---
 layout: default
+---
+
+<span class="kicker">Models vs. products</span>
+
+# A foundation model is not an embedding product
+
+<div class="cols2" style="margin-top:0.9rem;">
+<div>
+
+## Foundation models (dynamic inference)
+
+Distributed as public weights (DOFA, OlmoEarth). Users manage preprocessing and GPU inference themselves. This is flexible but raises a hardware and engineering barrier.
+
+</div>
+<div>
+
+## Embedding products (static data)
+
+Distributed as pre-computed vector archives (Google Satellite Embedding). The assets are frozen and versioned, so analysis proceeds without the model or its compute.
+
+</div>
+</div>
+
+<p style="margin-top:1.2rem;">
+A product is pinned to the data snapshot it was computed on, so <span class="hl">results measured on a product do not generalize to the model behind it</span>.
+</p>
+
+<div class="cite">Fang, Stewart, Corley, Zhu, Azizpour — Earth Embeddings as Products, IGARSS 2026, §II.</div>
+
+---
+layout: default
+---
+
+<span class="kicker">Models vs. products · metrics</span>
+
+# Paper metrics do not reproduce from the products
+
+The AlphaEarth and Tessera papers report benchmark numbers from internal pipelines. The same tasks, evaluated on the <span class="hl">released annual embedding products</span>, give different numbers.
+
+- The papers embed **exact input stacks**. The products are **annual composites** over reprocessed archives.
+- Benchmark numbers should describe the **downloadable data** rather than the model.
+
+<div class="cite">Earth Embeddings (book chapter, 2026), §5 · Corley et al., 2026 — EuroSAT-Embed re-evaluation of AlphaEarth, Tessera, OlmoEarth.</div>
+
+---
+layout: default
+---
+
+<span class="kicker">Models vs. products · practice</span>
+
+# The model is not the map
+
+<div class="cols2" style="margin-top:0.6rem; align-items:center;">
+<div>
+
+<div class="plot fig-ren-post" style="width:92%;"></div>
+
+<p style="margin-top:0.9rem;">Ren corrupts one land cover map four ways. Every version scores <span class="hl">F1 ≈ 0.73–0.74</span>, but each error is obvious on the map. Release predictions and embeddings alongside checkpoints. Nobody knows a model better than the team that trained it.</p>
+
+</div>
+<div class="plot fig-ren-quartet" style="height:19rem;"></div>
+</div>
+
+<div class="cite">Ren — The Model is not the Map, christopherren.substack.com, Jun 2025 · Dynamic World built-area maps over Santa Fe, NM.</div>
+
+---
+layout: default
 class: roomy left-table
 ---
 
@@ -438,7 +438,7 @@ class: demos
 layout: default
 ---
 
-<span class="kicker">Guidance</span>
+<span class="kicker">Recommendations</span>
 
 # Streamable formats, embedded metadata, and int8
 

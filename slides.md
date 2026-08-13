@@ -420,14 +420,14 @@ class: demos
 
 <div style="width:88%; margin:0 auto;"><LoopVideo name="terrabit" /></div>
 
-<p class="democap"><strong>TerraBit</strong> — 50M Clay v1.5 patches binarized to 128 bytes each, streamed from a static Source Cooperative bucket. Hamming search runs in a Web Worker with no backend or API.</p>
+<p class="democap"><strong>TerraBit</strong> — 50M Clay v1.5 patches binarized to 128 bytes each and streamed from Source Cooperative. Hamming search runs in a Web Worker with no backend.<br><span class="demolink">isaac.earth/terrabit</span></p>
 
 </div>
 <div>
 
 <div style="width:88%; margin:0 auto;"><LoopVideo name="deltabit" /></div>
 
-<p class="democap"><strong>DeltaBit</strong> — AlphaEarth pixel differences at 8 bytes per pixel (PCA-8 + int8) as XYZ GeoTIFF tiles. The user labels, trains, and maps change in the browser (Seattle, 2020 → 2024).</p>
+<p class="democap"><strong>DeltaBit</strong> — AlphaEarth pixel differences at 8 bytes per pixel (PCA-8 + int8) as XYZ GeoTIFF tiles. The user labels, trains, and maps change in the browser (Seattle, 2020 → 2024).<br><span class="demolink">calebrob.com/deltabit</span></p>
 
 </div>
 </div>

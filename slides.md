@@ -44,9 +44,7 @@ layout: default
 clicks: 1
 ---
 
-<span class="kicker">Motivation</span>
-
-# Run the model once, reuse the vectors
+# Embeddings as Reusable Data
 
 NASA's EOSDIS alone holds <span class="hl">178.7 PB</span> of imagery and grows by 160 TB per day. Analyses of this archive each repeat the same download, preprocessing, and GPU inference. An embedding product runs the model once and distributes the output vectors as data.
 
@@ -61,9 +59,7 @@ layout: default
 clicks: 1
 ---
 
-<span class="kicker">Motivation · retrieval</span>
-
-# The Earth is one large document
+# The Earth as One Large Document
 
 <div class="cols2" style="grid-template-columns: 1.15fr 1fr; margin-top:0.5rem; align-items:center;">
 <div>
@@ -91,9 +87,7 @@ For the Earth archive, the chunk is not well defined:
 layout: default
 ---
 
-<span class="kicker">Taxonomy</span>
-
-# Three families of Earth embeddings
+# Three Families of Earth Embeddings
 
 <div class="plot fig-types" style="height:19.5rem; margin-top:0.4rem;"></div>
 
@@ -103,9 +97,7 @@ layout: default
 layout: default
 ---
 
-<span class="kicker">Landscape · 1 of 2</span>
-
-# Patch products summarize km-scale tiles
+# Patch Embedding Products
 
 <div class="note">All known patch embedding products as of July 2026. *sparse spatial or temporal coverage.</div>
 
@@ -125,9 +117,7 @@ layout: default
 layout: default
 ---
 
-<span class="kicker">Landscape · 2 of 2</span>
-
-# Pixel products store a vector per pixel-year
+# Pixel Embedding Products
 
 <div class="note">All known pixel embedding products as of July 2026. Every product is built from annual time series. *sparse coverage.</div>
 
@@ -146,9 +136,7 @@ layout: default
 layout: default
 ---
 
-<span class="kicker">Landscape · industry</span>
-
-# Industry is selling embeddings as the product
+# Commercial Embedding Products and Services
 
 <div class="cols3 industry" style="margin-top:1.3rem;">
 <div>
@@ -182,9 +170,7 @@ Raised **$9M** in 2025 to build services on geographic embeddings, and published
 layout: default
 ---
 
-<span class="kicker">Ecosystem</span>
-
-# Formats, grids, and hosting differ per product
+# Fragmented Formats, Grids, and Hosting
 
 - Products are scattered across **Source Cooperative** (Clay, Earth Index), Hugging Face (Major TOM), Earth Engine (Google, Presto), and private servers (Tessera).
 - Formats span **GeoParquet**, GeoTIFF with implicit CRS assumptions, and ungeoreferenced NumPy arrays.
@@ -200,9 +186,7 @@ layout: default
 clicks: 1
 ---
 
-<span class="kicker">Ecosystem · cost</span>
-
-# Storage costs span five orders of magnitude
+# Storage and Egress Costs
 
 <div style="width:57%; margin:0.1rem auto 0;">
 <LoopVideo name="storage" />
@@ -216,9 +200,7 @@ Patch products stay in the MB–GB range, while dense 10 m pixel products reach 
 layout: default
 ---
 
-<span class="kicker">Ecosystem · access</span>
-
-# Hosting and format choices decide usability
+# Hosting and Format Barriers
 
 - **Hugging Face** enforces storage caps and API rate limits, so bulk pulls of TB-scale products throttle or fail.
 - **Tessera** distributes `.npy` tiles plus a metadata sidecar. NumPy arrays do not support HTTP range requests, so reads download whole tiles that a <span class="hl">COG or Zarr would stream</span>.
@@ -231,9 +213,7 @@ layout: default
 layout: default
 ---
 
-<span class="kicker">Ecosystem · reproducibility</span>
-
-# No product is fully reproducible
+# Reproducibility and Licensing
 
 - **Clay, Earth Index, and Copernicus-Embed** release code, weights, and data under permissive licenses.
 - **Tessera** releases code, weights, and embeddings openly, but records <span class="hl">no metadata about which inputs built each tile</span>, so its outputs cannot be audited.
@@ -247,9 +227,7 @@ layout: default
 layout: default
 ---
 
-<span class="kicker">Models vs. products</span>
-
-# A foundation model is not an embedding product
+# Foundation Models vs. Embedding Products
 
 <div class="cols2" style="margin-top:0.9rem;">
 <div>
@@ -278,14 +256,16 @@ A product is pinned to the data snapshot it was computed on, so <span class="hl"
 layout: default
 ---
 
-<span class="kicker">Models vs. products · metrics</span>
+# Paper Metrics vs. Product Metrics
 
-# Paper metrics do not reproduce from the products
+<div style="max-width:41.5rem; font-size:1.08rem; line-height:1.6; margin-top:0.8rem;">
 
 The AlphaEarth and Tessera papers report benchmark numbers from internal pipelines. The same tasks, evaluated on the <span class="hl">released annual embedding products</span>, give different numbers.
 
 - The papers embed **exact input stacks**. The products are **annual composites** over reprocessed archives.
-- Benchmark numbers should describe the **downloadable data** rather than the model.
+- Benchmarks should describe the **downloadable data** rather than the model.
+
+</div>
 
 <div class="cite">Earth Embeddings (book chapter, 2026), §5 · Corley et al., 2026 — EuroSAT-Embed re-evaluation of AlphaEarth, Tessera, OlmoEarth.</div>
 
@@ -293,9 +273,7 @@ The AlphaEarth and Tessera papers report benchmark numbers from internal pipelin
 layout: default
 ---
 
-<span class="kicker">Guidance · choosing</span>
-
-# No one knows which product is best for your task
+# No One Knows the SOTA in GFMs
 
 <div class="cols2" style="grid-template-columns: 1.35fr 1fr; margin-top:0.5rem; align-items:center;">
 <div>
@@ -316,9 +294,7 @@ We built **torchgeo-bench**, a maintained harness for frozen backbones with shar
 layout: default
 ---
 
-<span class="kicker">Guidance · combining</span>
-
-# Products are complementary
+# Fusing Multiple Products
 
 <div class="cols2" style="grid-template-columns: 1.35fr 1fr; margin-top:0.5rem; align-items:center;">
 <div>
@@ -339,9 +315,7 @@ Which products complement each other depends on the task and region, so a probe 
 layout: default
 ---
 
-<span class="kicker">Open problems</span>
-
-# Smaller, sliceable vectors are underexplored
+# Open Research Directions
 
 <div class="cols2" style="grid-template-columns: 1.2fr 1fr; margin-top:0.6rem; align-items:center;">
 <div>
@@ -368,9 +342,7 @@ clicks: 1
 class: demos
 ---
 
-<span class="kicker">Demos</span>
-
-# Compressed embeddings run in the browser
+# Compressed Embeddings in the Browser
 
 <div class="cols2" style="margin-top:0.3rem;">
 <div>
@@ -393,11 +365,10 @@ class: demos
 
 ---
 layout: default
+class: bigtable
 ---
 
-<span class="kicker">Recommendations</span>
-
-# Streamable formats, embedded metadata, and int8
+# Recommendations for Producers
 
 <div class="cols2">
 <div>
@@ -427,9 +398,7 @@ layout: cover
 class: cover
 ---
 
-<span class="kicker">Closing</span>
-
-# Takeaways and open problems
+# Takeaways and Open Problems
 
 <div style="font-size:0.95rem; line-height:1.75; margin-top:0.6rem; max-width:44rem;">
 Pick the family by task: implicit for location context, patch for retrieval, pixel for dense mapping. Validate under geographic splits against simple baselines, and consider fusing products instead of picking one. Open problems are standardized formats and provenance, ocean and atmosphere coverage, uncertainty layers, and shared benchmarks (identical models differ by more than ten points across papers).

@@ -61,7 +61,7 @@ clicks: 1
 
 # The Earth as One Large Document
 
-<div class="cols2" style="grid-template-columns: 1.15fr 1fr; margin-top:0.5rem; align-items:center;">
+<div class="cols2" style="grid-template-columns: 1.15fr 1fr; align-items:center;">
 <div>
 
 Embedding retrieval matured in image search and in document retrieval for LLMs (RAG). The pipeline splits a corpus into chunks, embeds each chunk, and indexes the vectors for search.
@@ -89,7 +89,7 @@ layout: default
 
 # Three Families of Earth Embeddings
 
-<div class="plot fig-types" style="height:19.5rem; margin-top:0.4rem;"></div>
+<div class="plot fig-types" style="height:19.5rem;"></div>
 
 <div class="cite">Stewart, Fang, Corley, Zhu — Earth Embeddings (book chapter, 2026), Fig. 1; figure design adapted from Klemmer et al., 2025 (EarthArXiv).</div>
 
@@ -138,7 +138,7 @@ layout: default
 
 # Commercial Embedding Products and Services
 
-<div class="cols3 industry" style="margin-top:1.3rem;">
+<div class="cols3 industry">
 <div>
 
 ## Descartes Labs <span class="muted">2017</span>
@@ -173,7 +173,7 @@ layout: default
 # Fragmented Formats, Grids, and Hosting
 
 - Products are scattered across **Source Cooperative** (Clay, Earth Index), Hugging Face (Major TOM), Earth Engine (Google, Presto), and private servers (Tessera).
-- Formats span **GeoParquet**, GeoTIFF with implicit CRS assumptions, and ungeoreferenced NumPy arrays.
+- Formats span **GeoParquet**, GeoTIFF with an assumed CRS, and ungeoreferenced NumPy arrays.
 - Each product defines its own **tiling grid**, so any cross-product comparison starts with reprojection.
 - **One flipped coordinate** in the Google rasters forced fixes in <span class="hl">GDAL, rasterio, and TorchGeo</span>.
 
@@ -188,7 +188,7 @@ clicks: 1
 
 # Storage and Egress Costs
 
-<div style="width:57%; margin:0.1rem auto 0;">
+<div style="width:57%; margin-left:auto; margin-right:auto;">
 <LoopVideo name="storage" />
 </div>
 
@@ -202,9 +202,9 @@ layout: default
 
 # Hosting and Format Barriers
 
-- **Hugging Face** enforces storage caps and API rate limits, so bulk pulls of TB-scale products throttle or fail.
+- **Hugging Face** enforces storage caps and API rate limits, so TB-scale downloads throttle or fail.
 - **Tessera** distributes `.npy` tiles plus a metadata sidecar. NumPy arrays do not support HTTP range requests, so reads download whole tiles that a <span class="hl">COG or Zarr would stream</span>.
-- The **AlphaEarth embeddings** were available only through Earth Engine or a requester-pays bucket, where the reader pays the egress. **Taylor Geospatial rehosted them in a non-requester-pays bucket on Source Cooperative**, with free egress, HTTP range reads, and CORS for browser streaming.
+- The **AlphaEarth embeddings** were available only through Earth Engine or a requester-pays bucket. **Taylor Geospatial rehosted them in a non-requester-pays bucket on Source Cooperative**, with free egress, HTTP range reads, and CORS for browser streaming.
 - Several products are so **sparse in space and time** that no common footprint exists for comparison.
 
 <div class="cite">Corley — The Technical Debt of Earth Embedding Products, cloudnativegeo.org, Feb 2026 · AEF rehost: source.coop, 2026.</div>
@@ -215,9 +215,9 @@ layout: default
 
 # Reproducibility and Licensing
 
-- **Clay, Earth Index, and Copernicus-Embed** release code, weights, and data under permissive licenses.
+- **Clay, Earth Index, and Copernicus-Embed** release code, weights, and data openly.
 - **Tessera** releases code, weights, and embeddings openly, but records <span class="hl">no metadata about which inputs built each tile</span>, so its outputs cannot be audited.
-- **Major TOM**'s CC-BY-SA pretraining data makes its embeddings copyleft, deterring commercial users.
+- **Major TOM**'s CC-BY-SA training data makes its embeddings copyleft, deterring commercial use.
 - **AlphaEarth and ESDNet** publish CC-BY embeddings but keep code and weights proprietary.
 - **No product provides checksums.** Reprocessed archives make the exact inputs unrecoverable.
 
@@ -229,7 +229,7 @@ layout: default
 
 # Foundation Models vs. Embedding Products
 
-<div class="cols2" style="margin-top:0.9rem;">
+<div class="cols2">
 <div>
 
 ## Foundation models
@@ -258,7 +258,7 @@ layout: default
 
 # Paper Metrics vs. Product Metrics
 
-<div style="max-width:41.5rem; font-size:1.08rem; line-height:1.6; margin-top:0.8rem;">
+<div style="max-width:41.5rem; font-size:1.08rem; line-height:1.6;">
 
 The AlphaEarth and Tessera papers report benchmark numbers from internal pipelines. The same tasks, evaluated on the <span class="hl">released annual embedding products</span>, give different numbers.
 
@@ -275,7 +275,7 @@ layout: default
 
 # No One Knows the SOTA in GFMs
 
-<div class="cols2" style="grid-template-columns: 1.35fr 1fr; margin-top:0.5rem; align-items:center;">
+<div class="cols2" style="grid-template-columns: 1.35fr 1fr; align-items:center;">
 <div>
 
 An audit of 152 geospatial foundation model papers found **46 cross-paper disagreements of ≥10 points** for the same model, benchmark, and protocol.
@@ -296,7 +296,7 @@ layout: default
 
 # Fusing Multiple Products
 
-<div class="cols2" style="grid-template-columns: 1.35fr 1fr; margin-top:0.5rem; align-items:center;">
+<div class="cols2" style="grid-template-columns: 1.35fr 1fr; align-items:center;">
 <div>
 
 You do not have to pick one product.
@@ -317,12 +317,12 @@ layout: default
 
 # Open Research Directions
 
-<div class="cols2" style="grid-template-columns: 1.2fr 1fr; margin-top:0.6rem; align-items:center;">
+<div class="cols2" style="grid-template-columns: 1.2fr 1fr; align-items:center;">
 <div>
 
-- **Quantization.** Google and Tessera use int8 at no measurable cost. No product goes lower, yet binary recovers ~65% of float32 nearest neighbors.
+- **Quantization.** Google and Tessera use int8 at no measurable cost. Binary recovers ~65% of float32 nearest neighbors.
 - **Disentangled representations.** VAE-style training gives each dimension a separate meaning. Not yet applied to Earth embeddings.
-- **Matryoshka learning.** Tessera v2, Clay, and our **MIND location encoder** train nested dimensions, so users truncate to their budget. No other products do.
+- **Matryoshka learning.** Tessera v2, Clay, and our **MIND location encoder** train nested dimensions, so users truncate to their budget.
 
 </div>
 <div class="matryoshka">
@@ -344,7 +344,7 @@ class: demos
 
 # Compressed Embeddings in the Browser
 
-<div class="cols2" style="margin-top:0.3rem;">
+<div class="cols2">
 <div>
 
 <div style="width:88%; margin:0 auto;"><LoopVideo name="terrabit" /></div>
@@ -383,7 +383,7 @@ class: bigtable
 </div>
 <div>
 
-- Provide a **model card**: sensors, temporal window, CRS, grid, dtype, quantization, license.
+- Provide a **model card**: sensors, time window, CRS, grid, dtype, license.
 - Store metadata **inside the files** rather than in separate docs.
 - **int8 by default**; PCA to 64 dims costs <2% accuracy for 64× compression.
 - **Runnable benchmarks** instead of leaderboards.

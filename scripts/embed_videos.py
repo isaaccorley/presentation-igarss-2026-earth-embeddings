@@ -22,11 +22,11 @@ from pikepdf import Array, Dictionary, Name, Pdf, String
 
 # (0-based page index, mp4 path, rect in PDF points [x0, y0, x1, y1])
 CLIPS = [
-    (1, "public/loop-pipeline.mp4", (75.8, 58.7, 659.3, 277.6)),
-    (2, "public/loop-search.mp4", (399.6, 110.5, 699.1, 335.2)),
-    (8, "public/loop-storage.mp4", (178.6, 168.2, 556.5, 337.6)),
-    (16, "public/loop-terrabit.mp4", (55.3, 168.3, 338.6, 337.6)),
-    (16, "public/loop-deltabit.mp4", (396.5, 173.1, 679.8, 337.6)),
+    (1, "public/loop-pipeline.mp4", (75.8, 42.4, 659.3, 261.3)),
+    (2, "public/loop-search.mp4", (399.6, 75.5, 699.1, 300.2)),
+    (8, "public/loop-storage.mp4", (178.6, 134.4, 556.5, 303.8)),
+    (16, "public/loop-terrabit.mp4", (55.3, 152.5, 338.6, 321.8)),
+    (16, "public/loop-deltabit.mp4", (396.5, 157.3, 679.8, 321.8)),
 ]
 
 

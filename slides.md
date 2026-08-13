@@ -48,7 +48,7 @@ clicks: 1
 
 # Run the model once, reuse the vectors
 
-NASA's EOSDIS alone holds <span class="hl">178.7 PB</span> of imagery and grows by 160 TB per day. Every team downloads the same pixels again and repeats the same preprocessing and GPU inference. Embedding products run the model once and distribute the vectors as reusable data.
+NASA's EOSDIS alone holds <span class="hl">178.7 PB</span> of imagery and grows by 160 TB per day. Analyses of this archive each repeat the same download, preprocessing, and GPU inference. An embedding product runs the model once and distributes the output vectors as data.
 
 <div style="width:88%; margin:0.7rem auto 0;">
 <LoopVideo name="pipeline" />
@@ -68,9 +68,9 @@ clicks: 1
 <div class="cols2" style="grid-template-columns: 1.15fr 1fr; margin-top:0.5rem; align-items:center;">
 <div>
 
-Embedding retrieval matured in image search and in document retrieval for LLMs (RAG). The recipe is to chunk, embed, index, and retrieve. The Earth archive is one enormous document.
+Embedding retrieval matured in image search and in document retrieval for LLMs (RAG). The pipeline splits a corpus into chunks, embeds each chunk, and indexes the vectors for search.
 
-But there is no obvious chunk:
+For the Earth archive, the chunk is not well defined:
 
 <div class="qgrid">
 <div>What is the <strong>spatial extent</strong> of a chunk?</div>
@@ -117,7 +117,7 @@ layout: default
 | Earth Index (2025) | Global | 320 m | 2024 | 384 | float32 |
 | Copernicus-Embed (2025) | Global | 0.25° | 2021 | 768 | float32 |
 
-**Major TOM** is the largest family, with more than a dozen model variants on one shared grid. Every product stores float32. One vector summarizes an entire mosaic tile, which suits retrieval more than dense mapping.
+**Major TOM** is the largest family, with more than a dozen model variants on one shared grid. All patch products store float32. One vector summarizes an entire mosaic tile, which suits retrieval more than dense mapping.
 
 <div class="cite">Earth Embeddings (book chapter, 2026), Table 2 — abridged to family level.</div>
 
@@ -138,7 +138,7 @@ layout: default
 | Google Satellite Embedding (2025) | Global | 10 m | 2017–2025 | 64 | int8 → float64 |
 | Embedded Seamless Data (2026) | Global | 30 m | 2000–2024 | 12 | uint16 → float32 |
 
-**Google Satellite Embedding** covers the full Sentinel era at 64 dimensions. **Embedded Seamless Data** trades resolution for 25 years of Landsat history. Storage pressure drives the int8 and uint16 dtypes.
+**Google Satellite Embedding** covers the full Sentinel era at 64 dimensions. **Embedded Seamless Data** trades resolution for 25 years of Landsat history. The int8 and uint16 dtypes reduce storage at these volumes.
 
 <div class="cite">Earth Embeddings (book chapter, 2026), Table 3.</div>
 
@@ -187,11 +187,11 @@ layout: default
 # Formats, grids, and hosting differ per product
 
 - Products are scattered across **Source Cooperative** (Clay, Earth Index), Hugging Face (Major TOM), Earth Engine (Google, Presto), and private servers (Tessera).
-- Formats span **GeoParquet**, GeoTIFF with implicit CRS assumptions, and raw NumPy arrays with no CRS or bounds ("numbers and a prayer").
+- Formats span **GeoParquet**, GeoTIFF with implicit CRS assumptions, and ungeoreferenced NumPy arrays.
 - Each product defines its own **tiling grid**, so any cross-product comparison starts with reprojection.
 - **One flipped coordinate** in the Google rasters forced fixes in <span class="hl">GDAL, rasterio, and TorchGeo</span>.
 
-Every team solves distribution on its own, so every user pays an integration cost for every product.
+Each producer distributes differently, so integration effort is repeated for each product and each user.
 
 <div class="cite">Corley — The Technical Debt of Earth Embedding Products, cloudnativegeo.org, Feb 2026.</div>
 
@@ -221,7 +221,7 @@ layout: default
 # Hosting and format choices decide usability
 
 - **Hugging Face** enforces storage caps and API rate limits, so bulk pulls of TB-scale products throttle or fail.
-- **Tessera** distributes `.npy` tiles plus a metadata sidecar. NumPy has no HTTP range requests, so reads pull whole tiles that a <span class="hl">COG or Zarr would stream</span>. It is GeoTIFF without the streaming or the metadata.
+- **Tessera** distributes `.npy` tiles plus a metadata sidecar. NumPy arrays do not support HTTP range requests, so reads download whole tiles that a <span class="hl">COG or Zarr would stream</span>.
 - The **AlphaEarth embeddings** were available only through Earth Engine or a requester-pays bucket, where the reader pays the egress. **Taylor Geospatial rehosted them in a non-requester-pays bucket on Source Cooperative**, with free egress, HTTP range reads, and CORS for browser streaming.
 - Several products are so **sparse in space and time** that no common footprint exists for comparison.
 
@@ -238,8 +238,8 @@ layout: default
 - **Clay, Earth Index, and Copernicus-Embed** release code, weights, and data under permissive licenses.
 - **Tessera** releases code, weights, and embeddings openly, but records <span class="hl">no metadata about which inputs built each tile</span>, so its outputs cannot be audited.
 - **Major TOM**'s CC-BY-SA pretraining data makes its embeddings copyleft, deterring commercial users.
-- **AlphaEarth and ESDNet** keep code and weights proprietary. The embeddings are CC-BY, but no one outside can regenerate them.
-- **No product provides checksums.** Archives keep reprocessing scenes, so exact inputs are unrecoverable.
+- **AlphaEarth and ESDNet** publish CC-BY embeddings but keep code and weights proprietary.
+- **No product provides checksums.** Reprocessed archives make the exact inputs unrecoverable.
 
 <div class="cite">Earth Embeddings (book chapter, 2026), Tables 4–6 — license provenance from data to weights to embeddings.</div>
 
@@ -302,7 +302,7 @@ layout: default
 
 <div class="plot fig-ren-post" style="width:92%;"></div>
 
-<p style="margin-top:0.9rem;">Ren corrupts one land cover map four ways. Every version scores <span class="hl">F1 ≈ 0.73–0.74</span>, but each error is obvious on the map. Release predictions and embeddings alongside checkpoints. Nobody knows a model better than the team that trained it.</p>
+<p style="margin-top:0.9rem;">Ren corrupts one land cover map four ways. All four versions score <span class="hl">F1 ≈ 0.73–0.74</span>, yet each error is visible on the map. Metrics alone miss these failures, so producers should release predictions and embeddings alongside checkpoints.</p>
 
 </div>
 <div class="plot fig-ren-quartet" style="height:19rem;"></div>
@@ -328,7 +328,7 @@ class: roomy left-table
 | Scene classification, EuroSAT-Embed | Google, Tessera, OlmoEarth | pooling choice cuts the geographic gap by >50% |
 | Fusion across six tasks | Google, Tessera, GeoCLIP, SatCLIP | fused embeddings beat the best single model in 4 of 6 |
 
-Performance drops under **spatial transfer**, and annual composites wash out sub-annual dynamics. Validate with geographic splits and simple baselines before trusting any product.
+Performance drops under **spatial transfer**, and annual composites wash out sub-annual dynamics. Validate with geographic splits and simple baselines before adopting a product.
 
 <div class="cite">Zvonkov et al., 2025 · Ishikawa et al., 2025 · Cheng et al., 2026 · Pettersson & Daoud, 2025 · Corley et al., 2026 · van der Plas et al., 2026 · Ma et al., 2026.</div>
 
@@ -345,7 +345,7 @@ layout: default
 
 An audit of 152 geospatial foundation model papers found **46 cross-paper disagreements of ≥10 points** for the same model, benchmark, and protocol.
 
-94 of 126 papers use a pretraining configuration that appears in no other paper. **39% release no weights**, so their results cannot be re-run at all.
+94 of 126 papers use a pretraining configuration that appears in no other paper. **39% release no weights**, so their results cannot be re-run.
 
 We built **torchgeo-bench**, a maintained harness for frozen backbones with shared datasets, consistent probes, and bootstrapped confidence intervals.
 
@@ -390,7 +390,7 @@ layout: default
 <div>
 
 - **Quantization.** Google and Tessera use int8 at no measurable cost. No product goes lower, yet binary recovers ~65% of float32 nearest neighbors.
-- **Disentangled representations.** VAE-style training gives each dimension a separate meaning. Untried for Earth embeddings.
+- **Disentangled representations.** VAE-style training gives each dimension a separate meaning. Not yet applied to Earth embeddings.
 - **Matryoshka learning.** Tessera v2, Clay, and our **MIND location encoder** train nested dimensions, so users truncate to their budget. No other products do.
 
 </div>

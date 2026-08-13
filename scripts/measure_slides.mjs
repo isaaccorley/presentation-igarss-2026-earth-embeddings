@@ -4,7 +4,7 @@
 import { chromium } from 'playwright-chromium'
 
 const BASE = process.argv[2] || 'http://localhost:3030'
-const SLIDES = 21
+const SLIDES = 19
 
 const browser = await chromium.launch()
 const page = await browser.newPage({ viewport: { width: 1280, height: 800 } })

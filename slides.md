@@ -254,14 +254,16 @@ layout: default
 <div class="cols2" style="margin-top:0.9rem;">
 <div>
 
-## Foundation models (dynamic inference)
+## Foundation models
+<div class="note" style="margin:-0.35rem 0 0.7rem;">dynamic inference</div>
 
 Distributed as public weights (DOFA, OlmoEarth). Users manage preprocessing and GPU inference themselves. This is flexible but raises a hardware and engineering barrier.
 
 </div>
 <div>
 
-## Embedding products (static data)
+## Embedding products
+<div class="note" style="margin:-0.35rem 0 0.7rem;">static data</div>
 
 Distributed as pre-computed vector archives (Google Satellite Embedding). The assets are frozen and versioned, so analysis proceeds without the model or its compute.
 
@@ -288,49 +290,6 @@ The AlphaEarth and Tessera papers report benchmark numbers from internal pipelin
 - Benchmark numbers should describe the **downloadable data** rather than the model.
 
 <div class="cite">Earth Embeddings (book chapter, 2026), §5 · Corley et al., 2026 — EuroSAT-Embed re-evaluation of AlphaEarth, Tessera, OlmoEarth.</div>
-
----
-layout: default
----
-
-<span class="kicker">Models vs. products · practice</span>
-
-# The model is not the map
-
-<div class="cols2" style="margin-top:0.6rem; align-items:center;">
-<div>
-
-<div class="plot fig-ren-post" style="width:92%;"></div>
-
-<p style="margin-top:0.9rem;">Ren corrupts one land cover map four ways. All four versions score <span class="hl">F1 ≈ 0.73–0.74</span>, yet each error is visible on the map. Metrics alone miss these failures, so producers should release predictions and embeddings alongside checkpoints.</p>
-
-</div>
-<div class="plot fig-ren-quartet" style="height:19rem;"></div>
-</div>
-
-<div class="cite">Ren — The Model is not the Map, christopherren.substack.com, Jun 2025 · Dynamic World built-area maps over Santa Fe, NM.</div>
-
----
-layout: default
-class: roomy left-table
----
-
-<span class="kicker">Does it work?</span>
-
-# Embeddings improve mapping, not spatial transfer
-
-| Task | Embeddings | Finding |
-|------|------------|---------|
-| Cropland mapping, Togo | Presto, Google | Presto + Random Forest gives the best F1 |
-| Tree species, Dutch forest inventory | Presto, Google, Tessera | +2–9 points over hand-designed time-series features |
-| Landslide susceptibility, TW·HK·IT | Google | 64-d embeddings beat conventional conditioning factors |
-| Poverty mapping, Sub-Saharan Africa | Google + GNN | large storage/preprocessing savings vs. raw Sentinel-2 |
-| Scene classification, EuroSAT-Embed | Google, Tessera, OlmoEarth | pooling choice cuts the geographic gap by >50% |
-| Fusion across six tasks | Google, Tessera, GeoCLIP, SatCLIP | fused embeddings beat the best single model in 4 of 6 |
-
-Performance drops under **spatial transfer**, and annual composites wash out sub-annual dynamics. Validate with geographic splits and simple baselines before adopting a product.
-
-<div class="cite">Zvonkov et al., 2025 · Ishikawa et al., 2025 · Cheng et al., 2026 · Pettersson & Daoud, 2025 · Corley et al., 2026 · van der Plas et al., 2026 · Ma et al., 2026.</div>
 
 ---
 layout: default

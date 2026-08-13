@@ -258,12 +258,12 @@ layout: default
 
 # Paper Metrics vs. Product Metrics
 
-<div style="max-width:41.5rem; font-size:1.08rem; line-height:1.6;">
+<div style="max-width:46.5rem; font-size:1.12em; line-height:1.6;">
 
 The AlphaEarth and Tessera papers report benchmark numbers from internal pipelines. The same tasks, evaluated on the <span class="hl">released annual embedding products</span>, give different numbers.
 
 - The papers embed **exact input stacks**. The products are **annual composites** over reprocessed archives.
-- Benchmarks should describe the **downloadable data** rather than the model.
+- Product benchmarks should describe the **downloadable data**.
 
 </div>
 

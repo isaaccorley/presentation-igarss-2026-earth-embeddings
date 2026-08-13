@@ -48,7 +48,7 @@ clicks: 1
 
 # Run the model once, reuse the vectors
 
-NASA's EOSDIS alone holds <span class="hl">178.7 PB</span> of imagery and grows by 160 TB per day. Every team re-downloads the same pixels and re-pays the same preprocessing and GPU inference. Embedding products run the model once and distribute the vectors as reusable data.
+NASA's EOSDIS alone holds <span class="hl">178.7 PB</span> of imagery and grows by 160 TB per day. Every team downloads the same pixels again and repeats the same preprocessing and GPU inference. Embedding products run the model once and distribute the vectors as reusable data.
 
 <div style="width:88%; margin:0.7rem auto 0;">
 <LoopVideo name="pipeline" />
@@ -134,7 +134,7 @@ Distributed as pre-computed vector archives (Google Satellite Embedding). The as
 </div>
 
 <p style="margin-top:1.2rem;">
-A product is pinned to the data snapshot it was computed on, so <span class="hl">treating a product as a proxy for its model invites invalid generalization claims</span>.
+A product is pinned to the data snapshot it was computed on, so <span class="hl">results measured on a product do not generalize to the model behind it</span>.
 </p>
 
 <div class="cite">Fang, Stewart, Corley, Zhu, Azizpour — Earth Embeddings as Products, IGARSS 2026, §II.</div>
@@ -150,7 +150,7 @@ layout: default
 The AlphaEarth and Tessera papers report benchmark numbers from internal pipelines. The same tasks, evaluated on the <span class="hl">released annual embedding products</span>, give different numbers.
 
 - The papers embed **exact input stacks**. The products are **annual composites** over reprocessed archives.
-- Benchmark numbers for a product should describe the **downloadable data**, not the model behind it.
+- Benchmark numbers should describe the **downloadable data** rather than the model.
 
 <div class="cite">Earth Embeddings (book chapter, 2026), §5 · Corley et al., 2026 — EuroSAT-Embed re-evaluation of AlphaEarth, Tessera, OlmoEarth.</div>
 
@@ -256,9 +256,9 @@ layout: default
 - Products are scattered across **Source Cooperative** (Clay, Earth Index), Hugging Face (Major TOM), Earth Engine (Google, Presto), and private servers (Tessera).
 - Formats span **GeoParquet**, GeoTIFF with implicit CRS assumptions, and raw NumPy arrays with no CRS or bounds ("numbers and a prayer").
 - Each product defines its own **tiling grid**, so any cross-product comparison starts with reprojection.
-- **One flipped coordinate** in the Google rasters required patches to <span class="hl">GDAL, rasterio, and TorchGeo</span>.
+- **One flipped coordinate** in the Google rasters forced fixes in <span class="hl">GDAL, rasterio, and TorchGeo</span>.
 
-Every team solves distribution independently. The integration tax is paid once per product, per user.
+Every team solves distribution on its own, so every user pays an integration cost for every product.
 
 <div class="cite">Corley — The Technical Debt of Earth Embedding Products, cloudnativegeo.org, Feb 2026.</div>
 
@@ -306,7 +306,7 @@ layout: default
 - **Tessera** releases code, weights, and embeddings openly, but records <span class="hl">no metadata about which inputs built each tile</span>, so its outputs cannot be audited.
 - **Major TOM**'s CC-BY-SA pretraining data makes its embeddings copyleft, deterring commercial users.
 - **AlphaEarth and ESDNet** keep code and weights proprietary. The embeddings are CC-BY, but no one outside can regenerate them.
-- **No product provides checksums.** Archives keep reprocessing imagery; exact inputs are unrecoverable.
+- **No product provides checksums.** Archives keep reprocessing scenes, so exact inputs are unrecoverable.
 
 <div class="cite">Earth Embeddings (book chapter, 2026), Tables 4–6 — license provenance from data to weights to embeddings.</div>
 
@@ -345,7 +345,7 @@ layout: default
 
 An audit of 152 geospatial foundation model papers found **46 cross-paper disagreements of ≥10 points** for the same model, benchmark, and protocol.
 
-94 of 126 papers use a pretraining configuration no other paper uses. **39% release no weights**, so their results cannot be re-run at all.
+94 of 126 papers use a pretraining configuration that appears in no other paper. **39% release no weights**, so their results cannot be re-run at all.
 
 We built **torchgeo-bench**, a maintained harness for frozen backbones with shared datasets, consistent probes, and bootstrapped confidence intervals.
 
@@ -370,7 +370,7 @@ You do not have to pick one product.
 
 Fusing AlphaEarth, Tessera, GeoCLIP, and SatCLIP beats the best single product on <span class="hl">4 of 6 downstream tasks</span>.
 
-Complementarity is task- and location-dependent, so a concatenated probe is a cheap first experiment before committing to one product.
+Which products complement each other depends on the task and region, so a probe trained on the concatenated embeddings is a cheap first experiment.
 
 </div>
 <div class="plot paperpage fig-bettertogether" style="height:19rem;"></div>
@@ -389,7 +389,7 @@ layout: default
 <div class="cols2" style="grid-template-columns: 1.2fr 1fr; margin-top:0.6rem; align-items:center;">
 <div>
 
-- **Quantization.** Google and Tessera use int8 at no measurable cost. Nothing goes lower, yet binary recovers ~65% of float32 nearest neighbors.
+- **Quantization.** Google and Tessera use int8 at no measurable cost. No product goes lower, yet binary recovers ~65% of float32 nearest neighbors.
 - **Disentangled representations.** VAE-style training gives each dimension a separate meaning. Untried for Earth embeddings.
 - **Matryoshka learning.** Tessera v2, Clay, and our **MIND location encoder** train nested dimensions, so users truncate to their budget. No other products do.
 
@@ -458,7 +458,7 @@ layout: default
 - Provide a **model card**: sensors, temporal window, CRS, grid, dtype, quantization, license.
 - Store metadata **inside the files** rather than in separate docs.
 - **int8 by default**; PCA to 64 dims costs <2% accuracy for 64× compression.
-- **Runnable benchmarks**, not leaderboards.
+- **Runnable benchmarks** instead of leaderboards.
 
 </div>
 </div>
